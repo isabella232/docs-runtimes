@@ -1,0 +1,197 @@
+---
+title: Choosing PAS or PKS for Workloads
+owner: PCF Documentation
+---
+
+<strong><%= modified_date %></strong>
+
+This topic provides guidelines for determining when to run workloads on
+Pivotal Container Service (PKS) versus when to run them on Pivotal Application Service (PAS).
+
+These are recommendations based on observed common patterns.
+
+In order to choose the best runtime for your workloads, 
+consider all the situational requirements of your workload, 
+your organization and the specific problem you are looking to solve. 
+
+## <a id="runtime-abstration-levels"></a> Runtime Levels of Abstraction
+
+<img src="images/pks-pas-stack-compare.png" alt="Comparison of PKS and PAS stacks">
+<%#= https://docs.google.com/drawings/d/1OxcNdf-7g8tLfjguRr6kX71jy4SQe2UV1dh3Blks15c/edit %> 
+
+As a general guideline, when choosing which runtime to place your workload, s
+use the highest abstraction level possible. This means pushing as many workloads 
+as technically feasible to the top of the platform hierarchy.
+
+The higher you go, the more app developers can focus only on solving business problems.
+
+The lower you go, the more flexibility you gain in controlling different aspects about 
+the containers, their lifecycle and how the runtime should run the containers. 
+
+This flexibility comes at the expense of having to manage more things, 
+like managing the lifecycle of containers end-to-end and the configuration of 
+how those containers need to run in Kubernetes.
+
+## <a id="use-cases"></a> Common Workload Use Cases
+
+This section describes typical workloads that are currently best suited for the different runtimes.
+
+### <a id="pks-workloads"></a> PKS
+
+Types of use case for PKS:
+
+* Stateful workloads
+* Commercial or packaged software
+* Software distributed via Helm charts
+* Legacy, zero-factor apps
+* Non-HTTP protocol-based workloads
+
+Some specific examples of these types of workloads include:
+
+* MongoDB, PostgreSQL, Cassandra, Spark, Elastic Search
+* Microsoft SQL Server
+* Apache Kafka
+* Custom-built C++ app
+
+### <a id="pas-workloads"></a> PAS
+
+Types of workloads that are best suited for PAS:
+
+* Custom-built green field software targeting Windows or Linux
+* Software packaged into Docker images
+* Web applications
+* APIs
+* Batch jobs
+* Streaming applications
+
+Some specific examples of these types of workloads include:
+
+* HTTP based microservices built with Spring Boot
+* Partner-oriented API built with .NET Core
+* Legacy web-app built with .NET 4.x
+* Customer-facing web app built with Node.js
+* Data pipeline built with Spring Boot and TCP routing
+
+
+## <a id="add-factorss"></a> Additional Factors to Consider
+
+In addition to the technical characteristics of workloads listed in [Common Workload Use Cases](#user-cases),
+you should evaluate other factors such as current value of the application, the frequency of changes, 
+the skills on your team skills, and so on.
+
+The following tables breaks down additional considerations to help you characterize your needs.
+
+### <a id="workload-type"></a> Workload Types
+
+<table>
+<tr>
+	<th>If your workloads...</th>
+	<th>Then the best-suited runtime is...</th>
+</tr>
+<tr>
+	<th colspan="2">...are microservices that are</th>
+</tr>
+<tr>
+   <td>Brown field or refactored</td>
+   <td> PKS </td>
+</tr>
+<tr>
+  <td>Stateless (12-Factor)</td>
+  <td> PAS </td>
+
+</tr>
+<tr>
+  <td>Stateful</td>
+  <td> PKS </td>
+</tr>
+<tr>
+  <td>Clustered</td>
+  <td> PKS? </td>
+</tr>
+<tr> 
+  <td>Spring Boot-based</td>
+  <td> PAS </td>
+</tr>
+<tr>
+  <td>.NET Core-based </td>
+  <td> Either? PAS for Windows? </td>
+</tr>
+<tr>
+  <th colspan="2">...use the following data services</th>
+</tr>
+<tr>
+ <td> Pivotal Data Suite (MySQL, Redis, Rabbit, Cloud Cache)</td>
+ <td> PAS </td>
+</tr>
+<tr>
+  <td> PivNet ISV </td>
+  <td> PAS </td>
+</tr>
+<tr>
+<td> Kubernetes Helm Charts/Operators</td>
+<td> PKS </td>
+</tr>
+<tr>
+	<th colspan="2">... are monolithic applications of the following types</th>
+</tr>
+<tr>
+	<td>JEE</td>
+	<td> </td>
+</tr>
+<tr>
+	<td>Java but not Spring-based</td>
+	<td> </td>
+</tr>
+<tr> 
+	<td>.NET-based (ASP.net for example)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>Legacy (> 7 years old)</td>
+	<td> </td>
+</tr>
+<tr>
+	<th colspan="2">...container-deployed</th>
+</tr>
+<tr>
+	<td>Developer-built containers</td>
+<td></td>
+</tr>
+<tr>
+	<td>Kubernete Helm charts/operators</td>
+   <td> </td>
+ </tr>
+
+</table>
+
+### <a id="workload-value"></a> Workload Value
+
+<table>
+<tr>
+	<th>If your workloads is...</th>
+	<th>Then the best-suited runtime is...</th>
+</tr>
+<tr>
+	<th colspan="2">High value and...</th>
+</tr>
+<tr>
+   <td>Releases daily</td>
+   <td>  </td>
+</tr>
+<tr>
+   <td>Releases weekly</td>
+   <td> </td>
+ </tr>
+<tr>
+   <td>Releases monthly</td>
+   <td> </td>
+</tr>
+<tr>
+	<td>Releases every 2-6 months</td>
+	<td> </td>
+</tr>
+<tr>
+	<td>Releases every 6+ months</td>
+	<td> </td>
+</tr>
+</table>
