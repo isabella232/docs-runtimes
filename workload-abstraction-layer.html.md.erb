@@ -1,0 +1,166 @@
+---
+title: Choosing the Right Abstration Layer for Your Workload 
+owner: PCF Documentation
+---
+
+<strong><%= modified_date %></strong>
+
+This topic provides guidelines for determining the best abstraction layer for your workload 
+in Pivotal Cloud Foundry (PCF).
+
+<p class="note"><strong>Note</strong>: This topic provides recommendations based on 
+common patterns observed by Pivotal architects. In order to choose the best abstraction layer for your workload, 
+you must consider all the situational requirements of your organization.</p> 
+
+## <a id="runtime-abstration-levels"></a> Runtimes and Levels of Abstraction
+
+<img src="images/abstraction_layers.png" alt="Illustration of abstraction layers in PCF">
+<%#= https://docs.google.com/drawings/d/1iZ7AUu9W0oSGt-ev6vWaAt-ZUwsRNdUP7Zb2_XKuCLw/edit %> 
+
+In Pivotal Cloud Foundry, you can run your workloads on different runtimes. 
+These runtimes exist at different levels of abstraction in the platform stack.
+
+<table>
+  <tr>
+  <th>Abstraction Layer </th>
+  <th>Corresponding Runtimes in PCF</th>
+  </tr>
+  <tr>
+  	<td>
+    Serverless Functions
+    </td>
+    <td>Pivotal Function Service (PFS)</td>
+  </tr>
+  <tr>
+    <td>
+    Application Platform
+    </td>
+    <td>
+     Pivotal Application Service (PAS)
+    </td>
+  </tr>
+  <tr>
+    <td>
+    Container Orchestrator
+   </td>
+   <td>
+   	Pivotal Container Servicde (PKS)
+   </td>
+  </tr>
+</table>
+
+As a general guideline, when choosing where to place your workload,
+use a runtime that exists at the highest abstraction level possible. 
+Place as many workloads as technically feasible at the top of the platform hierarchy.
+
+The higher you go, the more app developers can focus only on solving business problems.
+
+The lower you go, the more flexibility you gain in controlling different aspects about 
+the containers, their lifecycle and how the runtime should run the containers. 
+However, this flexibility comes at the expense of having to manage more things, 
+like managing the lifecycle of containers end-to-end and the configuration of 
+how those containers need to run in Kubernetes.
+
+## <a id="use-cases"></a> Common Workload Use Cases
+
+This section describes typical workloads that are best suited for the different runtimes in PCF.
+
+<table>
+<tr>
+	<th>If your workload is...</th>
+	<th>Then the best-suited runtime in PCF is...</th>
+</tr>
+<tr> 
+    <td>Stateful</td>
+    <td>PKS</td>
+</tr>
+<tr> 
+    <td>Stateless</td>
+    <td>PAS</td>
+</tr>
+<tr> 
+    <td>Commercial or "off-the-shelf" software</td>
+    <td>PKS</td>
+</tr>
+<tr> 
+    <td>Custom-built green field software targeting Windows or Linux</td>
+    <td>PAS</td>
+</tr>
+<tr> 
+    <td>Software distributed via Helm charts</td>
+    <td>PKS</td>
+</tr>
+<tr> 
+    <td>Software packaged into Docker images</td>
+    <td>PAS</td>
+</tr>
+<tr> 
+    <td>Legacy, zero-factor apps</td>
+    <td>PKS</td>
+</tr>
+<tr>
+	<td>Web applications</td>
+	<td>PAS</td>
+</tr>
+<tr>
+	<td>Web applications</td>
+	<td>PAS</td>
+</tr>
+<tr>
+	<td>Batch jobs</td>
+	<td>PAS</td>
+</tr>
+<tr>
+	<td>Streaming applicationss</td>
+	<td>PAS</td>
+</tr>		 
+<tr> 
+    <td>Non-HTTP protocol-based</td>
+    <td>PKS</td>
+</tr>
+</table>
+
+### <a id="pks-workloads"></a> PKS Examples
+
+Some specific examples of PKS workloads include:
+
+* MongoDB, PostgreSQL, Cassandra, Spark, Elastic Search
+* Microsoft SQL Server
+* Apache Kafka
+* Custom-built C++ app
+
+### <a id="pas-workloads"></a> PAS Examples
+
+Some specific examples of PAS workloads include:
+
+* HTTP based microservices built with Spring Boot
+* Partner-oriented API built with .NET Core
+* Legacy web-app built with .NET 4.x
+* Customer-facing web app built with Node.js
+* Data pipeline built with Spring Boot and TCP routing
+
+
+## <a id="add-factorss"></a> Additional Factors to Consider
+
+In addition to the technical characteristics of workloads listed in [Common Workload Use Cases](#user-cases),
+you should evaluate other factors such as current value of the application, the frequency of changes, 
+the skills on your team skills, and so on.
+
+* Value
+* Release cycle
+* Team skills
+
+
+### <a id="workload_combinations"></a> Example Combinations
+
+* Data Services / COTS (distributed container) - with Traditional Infrastructure skills, becoming k8s savvy, vendor tied  -> PKS
+
+* Greenfield /Spring Boot Microservices - fast paced releases, pure Dev and CI/CD skills -> PAS
+
+* Greenfield /Spring Boot Microservices - fast paced releases, pure Dev and CI/CD skills, but also with Devs Building Containers and Platform team savvy with k8s,docker,gke -> PKS or PAS
+
+* .NET legacy - low value app → becoming high value and high paced, .NET dev skills -> PAS 
+
+* Java legacy - low value app → becoming high value and high paced, pure Dev and CI/CD skills, but also with Devs Building Containers and Platform team savvy with traditional middleware and also with k8s,docker,gke -> PAS/PKS combo (start PKS -> modernize -> PAS)
+
+* Legacy, low value, retirement status, infra skills -- *Maybe not? a great investment of anybody’s time
