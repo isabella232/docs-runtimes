@@ -24,15 +24,15 @@ Place as many workloads as technically feasible at the top of the platform hiera
 
 The higher you go, the more app developers can focus only on solving business problems.
 
-The lower you go, the more flexibility you gain in controlling different aspects about 
-the containers, their lifecycle and how the runtime should run the containers. 
+The lower you go, the more flexibility you gain in controlling different 
+aspects of the containers and their lifecycle, as well as how the runtime should run the containers.
 However, this flexibility comes at the expense of having to manage more things, 
 like managing the lifecycle of containers end-to-end and the configuration of 
 how those containers need to run in Kubernetes.
 
 ### <a id="runtimes-per-layer"></a> Runtimes in PCF
 
-In Pivotal Cloud Foundry, you can run workloads on different runtimes. 
+In PCF, you can run workloads on different runtimes. 
 These runtimes exist at different layers of abstraction in the platform stack.
 
 <table>
@@ -150,7 +150,7 @@ Some specific examples of PKS workloads include:
 
 Some specific examples of PAS workloads include:
 
-* HTTP based microservices built with Spring Boot
+* HTTP-based microservices built with Spring Boot
 * Partner-oriented API built with .NET Core
 * Legacy web-app built with .NET 4.x
 * Customer-facing web app built with Node.js
@@ -159,15 +159,11 @@ Some specific examples of PAS workloads include:
 
 ## <a id="add-factorss"></a> Additional Factors to Consider
 
-In addition to the technical characteristics of your workloads listed in [Common Workload Use Cases](#user-cases),
-evaluate other factors such as current value of the application, the frequency of changes, 
-the skills on your team skills, and so on when deciding which abstraction layer best suits your workload.
+In addition to the technical characteristics of your workloads listed in [Common Workload Use Cases](#use-cases),
+evaluate other factors such as the current value of the application, the frequency of changes, and 
+the skills on your team.
 
-* Value
-* Release cycle
-* Team skills
-
-Take these factors into account when making the decision about which abstraction layer best suits your business needs.
+Review the following sections when making decisions about which abstraction layer best suits your business needs.
 
 ### <a id="value-considerations"></a> Value Considerations
 
@@ -196,16 +192,16 @@ Some abstraction layers are a better fit to certain skillsets.
 
 On your development team, consider the following:
 
-* What languages and frameworks is the team currently using? For example, Spring, Java, .NET, Go, and so on.
+* What languages and frameworks is the team currently using? For example, Spring, Java, .NET, Go.
 * What CI/CD tooling are they familiar with? For example, Concourse, Jenkins and so on.
 * Do they currently use containers like Docker?
 
 On your platform team, consider the following:
 
 * Are they skilled in traditional middleware? For example, WebLogic, WebSphere, JBoss, ESB and so on.
-* What platforms are they used to managing? For example, Kubernetes, PCF, Docker Swarm, OpenShift, GKE and so on.
-* What type of on premise infrastructure skills do they possess? For example, vSphere, vSAN, HCI.
-* Are they skilled in automation? For example, Chef, Puppet, and so on.
+* What platforms are they used to managing? For example, Kubernetes, PCF, Docker Swarm, OpenShift, GKE.
+* What type of on-premise infrastructure skills do they possess? For example, vSphere, vSAN, HCI.
+* Are they skilled in automation? For example, Chef, Puppet.
 * Are they skilled in public cloud infrastructure? For example, GCP, AWS, Azure.
 
 ### <a id="workload_combinations"></a> Example Combinations
@@ -320,8 +316,8 @@ Data Services, COTS distributed as container
     - Platform team is building Kubernetes, Docker and GKE skills
   </td>
   <td>
-  PAS and PKS combination<br/> 
-  Start on PKS, modernize, and add PAS
+  Combination of PAS and PKS.<br/> 
+  Start on PKS, modernize, and then add PAS.
   </td>
 </tr>
 </table>
