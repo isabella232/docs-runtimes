@@ -22,16 +22,20 @@ Place as many workloads as technically feasible at the top of the platform hiera
 <img src="images/abstraction-layers.png" alt="Illustration of abstraction layers in PCF">
 <%#= https://docs.google.com/drawings/d/1iZ7AUu9W0oSGt-ev6vWaAt-ZUwsRNdUP7Zb2_XKuCLw/edit %> 
 
-The higher you go, the more app developers can focus only on solving business problems.
+The higher you go, the more you delegate to the platform in terms of managing aspects 
+like container image life cycle.
+As a result, developers can focus on solving business problems.
 
-The lower you go, the more flexibility you gain in controlling different 
-aspects of the containers and their lifecycle, as well as how the runtime should run the containers.
+The lower you go, the more flexibility you gain in controlling different aspects 
+of containers and how applications are deployed and run. 
 However, this flexibility comes at the expense of having to manage more things, 
-like managing the lifecycle of containers end-to-end and the configuration of 
-how those containers need to run in Kubernetes.
+such as managing the security and lifecycle of container images end-to-end and 
+the configuration of how those containers need to run in Kubernetes.
 
 ### <a id="runtimes-per-layer"></a> Runtimes in PCF
 
+PCF offers different runtimes to run your workloads. 
+Each of these runtimes represent an implementation of the above abstraction layers
 In PCF, you can run workloads on different runtimes. 
 These runtimes exist at different layers of abstraction in the platform stack.
 
@@ -107,7 +111,7 @@ This section describes typical workloads that are best suited for the different 
     <td align="center"> ✅ </td>
 </tr>
 <tr>
-	<td>Web applications</td>
+	<td>Web apps</td>
     <td align="center"> ✅ </td>
     <td> </td>
 </tr>
@@ -117,15 +121,10 @@ This section describes typical workloads that are best suited for the different 
     <td> </td>
 </tr>
 <tr>
-	<td>Streaming applicationss</td>
+	<td>Streaming apps</td>
     <td align="center"> ✅ </td>
     <td> </td>
 </tr>		 
-<tr> 
-    <td>Non-HTTP protocol-based</td>
-    <td> </td>
-    <td align="center"> ✅ </td>
-</tr>
 </table>
 
 ### <a id="pks-workloads"></a> PKS Examples
@@ -136,6 +135,7 @@ Some specific examples of PKS workloads include:
 * Microsoft SQL Server
 * Apache Kafka
 * Custom-built C++ app
+* Legacy Java-based zero factor monolith apps
 
 ### <a id="pas-workloads"></a> PAS Examples
 
@@ -160,30 +160,33 @@ decide which abstraction layer best suits your workload.
 These considerations are intended only as guiding prompts and should be reviewed 
 with your particular business needs and use cases in mind. 
 
-### <a id="value-considerations"></a> Value Considerations
+### <a id="value-considerations"></a> Value and Release Cycle Considerations
 
-In the area of value of your workload, consider the following:
+In the area of value and release cycles of your workload, consider the following:
 
-* Is this considered a high or low-value workload for the business?
-* Do you expect this workload to increase or decrease in value?
-* Is this a legacy workload?
-* Is there a plan to retire this workload?
-
-### <a id="release-cycle"></a> Release Cycle Considerations
-
-The release cycle of a workload is directly tied to its business value. 
-The higher the value, the more frequently you may want to release and update the software.
-
-In the area of release cycle, consider the following:
-
-* What is its current release cycle? Does it release daily, monthly, quarterly, bi-annually, or longer?
+* What is the current release cycle for the workload? Does it release daily, monthly, quarterly, bi-annually, or longer?
 * What is the desired or target release cycle for this workload? 
 * Does this workload depend on a vendor lifecycle?
 
+An application platform like PAS offers higher developer productivity guarantees.
+Therefore, placing your workload on the application platform layer can enable teams to go 
+faster and allow for those frequent release cycles.
+
+Applications that are owned by a vendor are tied to the vendor's lifecycle.
+Therefore, it may not be possible to update them very frequently such as on daily or weekly basis.
+
+Applications that are considered low value and will be retired soon
+do not need to be updated on a frequent basis.
+
 ### <a id="skills-consideration"></a> Team Skill Considerations
 
-In the area of team skills, evaluate the existing skillset of your development and platform teams. 
-Some abstraction layers are a better fit to certain skillsets.
+Team skills matter when choosing a technology because available skills can accelerate 
+or slow down the adoption of any solution. 
+
+Workload architecture decisions should be made in alignment with the in-house skills of an organization.
+
+Each abstraction layers expose different technologies to your development and platform teams. 
+Understanding the team skills can help inform the decision on which runtime to choose for each scenario.
 
 On your development team, consider the following:
 
@@ -194,10 +197,8 @@ On your development team, consider the following:
 On your platform team, consider the following:
 
 * Are they skilled in traditional middleware? For example, WebLogic, WebSphere, JBoss, ESB and so on.
-* What platforms are they used to managing? For example, Kubernetes, PCF, Docker Swarm, OpenShift, GKE.
+* What platforms are they used to managing? For example, Kubernetes, PCF, Docker Swarm, GKE.
 * What type of on-premise infrastructure skills do they possess? For example, vSphere, vSAN, HCI.
-* Are they skilled in automation? For example, Chef, Puppet.
-* Are they skilled in public cloud infrastructure? For example, GCP, AWS, Azure.
 
 ### <a id="workload_combinations"></a> Example Combinations
 
@@ -208,11 +209,8 @@ The following table lists some example combinations based on the workload use ca
   <th>
     Workload Type
   </th>
-  <th>
-    Value
-  </th>
   <th> 
-    Release Cycle
+    Value and Release Cycle
   </th>
   <th>
      Team Skills
@@ -227,10 +225,7 @@ The following table lists some example combinations based on the workload use ca
 Data Services, COTS distributed as container
   </td>
   <td>
-  High
-  </td>
-  <td>
-  Tied to vendor
+  High value, tied to vendor
   </td>
   <td>
   Traditional infrastructure skills, but becoming Kubernetes savvy
@@ -245,10 +240,7 @@ Data Services, COTS distributed as container
     Green field, Spring Boot Microservices
   </td>
   <td>
-    High
-  </td>
-  <td>
-    Fast-paced releases
+    High value, fast-paced releases
   </td>
   <td>
     Pure development and CI/CD skills
@@ -263,10 +255,7 @@ Data Services, COTS distributed as container
     Green field, Spring Boot Microservices
   </td>
   <td>
-    High
-  </td>
-  <td>
-    Fast-paced releases
+    High value, fast-paced releases
   </td>
   <td>
     - Pure development and CI/CD skills<br/>
@@ -283,10 +272,7 @@ Data Services, COTS distributed as container
   .NET legacy
   </td>
   <td>
-  Currently low, but becoming high value
-  </td>
-  <td>
-  Moving to faster-paced releases
+  Currently low, but becoming high value. <br/>Moving to faster-paced releases.
   </td>
   <td>
   .NET development skills
@@ -300,9 +286,7 @@ Data Services, COTS distributed as container
   <td>
     Java legacy
   </td> 
-  <td>Low value app, but becoming high value
-  </td>
-  <td>
+  <td>Low value app, but becoming high value.<br/>
   Moving to faster-paced releases
   </td>
   <td>- Pure development and CI/CD skills<br/>
