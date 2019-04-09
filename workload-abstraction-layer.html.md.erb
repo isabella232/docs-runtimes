@@ -35,7 +35,8 @@ the configuration of how those containers need to run in Kubernetes.
 ### <a id="runtimes-per-layer"></a> Runtimes in PCF
 
 PCF offers different runtimes to run your workloads. 
-Each of these runtimes represent an implementation of the above abstraction layers.
+Each one of these runtimes represents an implementation of the abstraction layers 
+depicted in the diagram above.
 
 <table>
   <tr>
@@ -80,49 +81,76 @@ This section describes typical workloads that are best suited for the different 
 </tr>
 <tr> 
     <td>Stateful</td>
-    <td> </td>
-    <td align="center"> ✅  </td>
+    <td align="center"> ☑️ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+    <td align="center"> ✅ ⭐</td>
 </tr>
 <tr> 
     <td>Stateless</td>
-    <td align="center"> ✅ </td>
-    <td>  </td>
+    <td align="center"> ✅ ⭐</td>
+    <td align="center"> ✅ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
 </tr>
 <tr> 
     <td>Commercial or "off-the-shelf" software</td>
-    <td> </td>
-    <td align="center"> ✅ </td>
+    <td align="center"> ☑️  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+    <td align="center"> ✅ ⭐</td>
 </tr>
 <tr> 
     <td>Custom-built green field software targeting Windows or Linux</td>
-    <td align="center"> ✅ </td>
-    <td> </td>
+    <td align="center"> ✅ ⭐ </td>
+    <td align="center"> ✅ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
 </tr>
 <tr> 
     <td>Software distributed via Helm charts</td>
-    <td> </td>
-    <td align="center"> ✅ </td>
+    <td align="center"> ❌ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+    <td align="center"> ✅ ⭐ </td>
 </tr>
 <tr> 
     <td>Legacy, zero-factor apps</td>
-    <td> </td>
-    <td align="center"> ✅ </td>
+    <td align="center"> ☑️ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+    <td align="center"> ✅ ⭐ </td>
 </tr>
 <tr>
 	<td>Web apps</td>
-    <td align="center"> ✅ </td>
-    <td> </td>
+    <td align="center"> ✅ ⭐ </td>
+    <td align="center"> ✅ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
 </tr>
 <tr>
 	<td>Batch jobs</td>
-    <td align="center"> ✅ </td>
-    <td> </td>
+    <td align="center"> ✅ ⭐ </td>
+    <td align="center"> ✅ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
 </tr>
 <tr>
 	<td>Streaming apps</td>
-    <td align="center"> ✅ </td>
-    <td> </td>
+    <td align="center"> ✅ ⭐ </td>
+    <td align="center"> ✅ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
 </tr>		 
+</table>
+
+#### Legend
+
+<table>
+<tr>
+  <th>Symbol</th>
+  <th>Description</th>
+</tr>
+<tr>
+  <td> ⭐ </td>
+  <td> Recommended runtime for this workload. Enables higher developer productivity and best path-to-production experience. </td>
+</tr>
+<tr>
+  <td> ✅</td>
+  <td> Workload runs well. </td>
+</tr>
+<tr>
+  <td> ☑️ </td>
+  <td> Workload runs well under certain scenarios. </td>
+</tr>
+<tr>
+  <td> ❌ </td>
+  <td> Workload is not typically compatible. </td>
+</tr>
+
+
 </table>
 
 ### <a id="pks-workloads"></a> PKS Examples
@@ -146,7 +174,7 @@ Some specific examples of PAS workloads include:
 * Data pipeline built with Spring Boot and TCP routing
 
 
-## <a id="add-factorss"></a> Additional Factors to Consider
+## <a id="add-factors"></a> Additional Factors to Consider
 
 In addition to the technical characteristics of your workloads listed in [Common Workload Use Cases](#use-cases),
 evaluate other factors such as the current value of the application, the frequency of changes, and 
